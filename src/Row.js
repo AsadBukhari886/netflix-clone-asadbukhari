@@ -9,6 +9,8 @@ const base_url = 'https://image.tmdb.org/t/p/original/'
 function Row({ title, fetchURL, isLargeRow }) {
     const [movie, setMovie] = useState([])
     const [trailerURL, setTrailerURL] = useState("")
+    const [hover, setHover] = useState(false);
+    const [id, setId] = useState("")
 
     useEffect(() => {
         async function fetchData() {
@@ -30,20 +32,20 @@ function Row({ title, fetchURL, isLargeRow }) {
         },
     }
 
-
+    const large_small_row = isLargeRow ? "large" : "small"
 
     const POPUP = (e, movie) => {
         e.preventDefault();
         if (trailerURL) {
             setTrailerURL("");
         } else {
-            movieTrailer(movie?.name || movie.title)
+            movieTrailer(movie?.name || movie?.title)
                 .then((url) => {
                     // console.log(url)
                     const param = new URL(url).search;
                     // console.log("URL searin",param.href)
 
-                    console.log("param is ::", param,"gfxM")
+                    console.log("param ::", param, "gfxM")
                     const useParam = new URLSearchParams(param)
                     // console.log("useParam is here:", useParam.get("v"))
                     setTrailerURL(useParam.getAll("v"))
@@ -53,25 +55,85 @@ function Row({ title, fetchURL, isLargeRow }) {
                 .catch(error => console.log(error))
 
         }
-        
-        // <a href="#youtube"/>
-
-        // alert(movie.name || movie.title || movie.original_name)
     }
+
+
     // const SRC = 'src';
     return (
         <div className="row">
             <h2>{title}</h2>
             <div className='row_posters '>
-                {movie?.map((movie) =>
+                {movie?.map((movie, key) =>
                 (<>
-                    <img key={movie.id}
+                    {/* <img key={movie.id}
                         src={`${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
+                        onMouseOver={e => (e.currentTarget.src = isLargeRow ? base_url + movie.backdrop_path : base_url + movie.backdrop_path)}
+                        onMouseOut={e => e.currentTarget.src = isLargeRow ? base_url + movie.poster_path : base_url + movie.backdrop_path}
                         alt={movie.name}
                         className={`row_poster ${isLargeRow && "row_posterLarger"}`}
                         onClick={(e) => POPUP(e, movie)
                         }
- />
+                    /> */}
+
+                    {/* <div>
+                        {hover ?
+                            <div onMouseOut={() => (console.log('hover down'), setHover(false))} 
+                            style={{ border: "2px solid blue", margin: "10px", transition: "all .3s" }}>
+                                <div className="hover_true" 
+                                style={{ backgroundImage: `url(${base_url}${isLargeRow ?
+                                     movie.poster_path : movie.backdrop_path})`, backgroundSize: "100% 100%", width: "200px", height: "100px" }}>
+
+                                </div>
+                            </div> :
+                            <div onMouseOver={() => (
+                                console.log("mouse over"),
+                                setHover(true)
+                             )} style={{ border: "2px solid blue", margin: "10px", transition: " .3s ease-all-out" }}>
+                                <div className="hover_false" style={{ backgroundImage: `url(${base_url}${isLargeRow ? movie.poster_path : movie.backdrop_path})`,
+                                 backgroundSize: "100% 100%", width: "200px" }}>
+
+                                </div>
+                            </div>
+                        }
+                    </div> */}
+                    {/* <div>
+                        <div
+                            style={{ backgroundImage: `url(${base_url}${isLargeRow?hover ? 
+                                movie.poster_path : movie.backdrop_path:movie.back})`, 
+                                backgroundSize: "100% 100%", width: "200px", height: "100px", margin: "10px" }}
+                            onMouseOver={(e) => (setHover(true), console.log("mouse entered", e.target))}
+                            onMouseOut={() => (setHover(false), console.log("mouse down", movie.poster_path))}>
+
+                        </div>
+                    </div> */}
+                    <div >
+                        <div className={`${large_small_row}`}
+                            style={{
+                                backgroundImage: `
+                                url(${base_url}${isLargeRow ?
+                                        hover ?
+                                            id == movie.id ?
+                                                movie.backdrop_path : movie.poster_path
+                                            : movie.poster_path
+                                        : movie.backdrop_path})`
+                            }}
+                            onMouseOver={(e) => (setHover(true), setId(movie.id))}
+                            onMouseOut={() => (setHover(false))}
+                            onClick={(e) => POPUP(e, movie)}
+                        >
+                            <div className={`${isLargeRow ? "text" : "notext"}`} onMouseEnter={() => (setHover(true))} style={{ transition: ".3s" }}>
+                                {hover ? id === movie.id ? <div>
+                                    {isLargeRow ? <div> <p> {movie.name ? movie.name || movie.title : 'No movie'}</p>
+                                        <button onClick={(e) => POPUP(e, movie)}>watch</button></div> : ""}
+
+                                </div> : <div></div> : <div></div>}
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
 
                 </>)
                     //    console.log(movie.poster_path),

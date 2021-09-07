@@ -5,8 +5,8 @@
 /.pnp
 .pnp.js
 .firebasesrc
-package.json
-firebase.json
+# package.json
+# firebase.json
 .firebase
 *.json
 build

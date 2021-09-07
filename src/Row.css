@@ -1,35 +1,110 @@
-.row{
+.row {
     /* color: blanchedalmond; */
     margin-left: 20px;
 }
-.row_posters{
+
+.row_posters {
     display: flex;
     overflow-y: hidden;
     overflow-x: scroll;
     padding: 20px;
-  
+    position: relative;
 }
-.row_posters::-webkit-scrollbar{
+
+.large {
+    position: relative;
+    width: 120px;
+    height: 183px;
+    margin: 10px;
+    background-size: 100% 100%;
+    transition: .3s;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.large:hover {
+    width: 300px;
+    /* opacity: .6; */
+}
+
+.small {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    transition: .3s;
+    background-size: 100% 100%;
+}
+
+.small:hover {
+   /* padding: 10px; */
+   width: 220px;
+    cursor: pointer;
+}
+
+.width {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    background-size: 100% 100%;
+    transition: 1s;
+}
+
+.text {
+    position: absolute;
+    /* top: 0; */
+    /* align-items: center; */
+    /* border: 1px solid red; */
+    margin: 40px;
+    /* opacity: 0; */
+    padding: 16px 32px;
+    background-color: transparent;
+    /* color: transparent; */
+    opacity: 1;
+}
+
+.notext {
+    opacity: 0;
+    transition: 3s;
+}
+
+.row_poster_text {
+    /* position: relative; */
+    padding: 45px;
+    /* border: 1px solid white; */
+    margin-left: -170px;
+    /* z-index: 0; */
+    /* display: none; */
+    opacity: 0;
+}
+
+.row_poster_text:hover {
+    /* display: block; */
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.row_posters::-webkit-scrollbar {
     display: none;
 }
 
 .row_poster {
-    object-fit: contain;
+    /* object-fit: contain; */
     width: 100%;
     max-height: 100px;
     transition: transform 540ms;
-    margin-right:10px;
-    
-}
-.row_poster:hover{
-    transform: scale(1.08);
+    margin-right: 10px;
+    transition: 20s;
+    transition-timing-function: linear;
+    /* transition: 3s; */
 }
 
-.row_posterLarger{
+.row_posterLarger {
     max-height: 250px;
 }
 
-.row_posterLarger:hover{
-    transform: scale(1.09);
+.row_posterLarger:hover {
+    /* transform: scale(1.09); */
     opacity: 1;
 }
